@@ -13,4 +13,4 @@ EXPOSE 5001
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
     CMD python -c "import urllib.request; urllib.request.urlopen('http://localhost:5001/api/health')"
 
-CMD ["python", "weather-api.py"]
+CMD ["python", "weather_api.py"]
