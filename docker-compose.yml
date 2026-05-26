@@ -1,0 +1,39 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.app
+    container_name: weather-app
+    ports:
+      - "5000:5000"
+    environment:
+      - FLASK_ENV=development
+      - API_URL=http://weather-api:5001
+    depends_on:
+      - api
+    networks:
+      - weather-network
+    volumes:
+      - ./app:/app
+    restart: unless-stopped
+
+#weather api service
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    container_name: weather-api
+    ports:
+      - "5001:5001"
+    environment:
+      - FLASK_ENV=development
+    networks:
+      - weather-network
+    volumes:
+      - ./api:/app
+    restart: unless-stopped
+
+networks:
+  weather-network:
+    driver: bridge
+
